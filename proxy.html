@@ -25,14 +25,33 @@
         if (event.origin == "http://127.0.0.1:4567") {
         	
         	console.debug('Client is calling me!');
-        	console.debug(event.data);
         	
-        	var result = {
-        		msg: 'hello world'
-        	};
+					var params = JSON.parse(event.data);
+					
+					params['success'] = function(data, status, xhr) {
+						var content = {
+							result: 'success',
+							'status': status,
+							response: data
+						} 
+						event.source.postMessage(JSON.stringify(content),  
+                           event.origin);	
+					};
+					
+					params['error'] = function(xhr, status, errorThrown) {
+						var content = {
+							result: 'error',
+							'status': status,
+							response: errorThrown
+						}
+						event.source.postMessage(JSON.stringify(data),  
+                           event.origin);	
+					};
+					
+					        	
+        	$.ajax(JSON.parse(params));
         	
-          event.source.postMessage(result,  
-                           event.origin); 
+           
         }
       }, false);  
   	
