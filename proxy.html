@@ -25,8 +25,8 @@
         if (event.origin == "http://127.0.0.1:4567") {
         	
         	console.debug('Client is calling me!');
-        	
-					var params = JSON.parse(event.data);
+        	console.debug(event.data);
+        	var params = JSON.parse(event.data);
 					
 					params['success'] = function(data, status, xhr) {
 						var content = {
