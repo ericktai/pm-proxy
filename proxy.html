@@ -25,7 +25,7 @@
         if (event.origin == "http://127.0.0.1:4567") {
         	
         	console.debug('Client is calling me!');
-        	console.debug(JSON.parse(event.data));
+        	console.debug(event.data);
         	
         	var result = {
         		msg: 'hello world'
