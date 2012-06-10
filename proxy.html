@@ -19,15 +19,14 @@
 
   $(document).ready(function() {
   	
-  	window.parent.postMessage({
-  		response: {
-  			success: true,
-  			data: { stuff: 'hi' } 
-  		}
-  	}, 'http://127.0.0.1:4567');
+  	
   	
   	window.addEventListener('message', function(event) {
         if (event.origin == "http://127.0.0.1:4567") {
+        	
+        	console.debug('Client is calling me!');
+        	console.debug(event);
+        	
         	var result = {
         		msg: 'hello world'
         	};
@@ -41,5 +40,6 @@
 </script>
 </head>
 <body>
+	This is the server side.
 </body>
 </html>
