@@ -44,10 +44,8 @@
 							'status': status,
 							response: errorThrown
 						}
-						console.debug(event.origin);
-						console.debug(event.source);
 						event.source.postMessage(JSON.stringify(content),  
-                           event.origin);	
+                           event.origin || "file://");	
 					};
 					
 					        	
