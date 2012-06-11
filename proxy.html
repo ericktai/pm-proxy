@@ -22,31 +22,34 @@
   	
   	
   	window.addEventListener('message', function(event) {
-  		console.debug(event.origin);
-        if (event.origin == "http://127.0.0.1:4567" || event.origin == null) {
+        if (event.origin == "http://127.0.0.1:4567") {
         	
         	console.debug('Client is calling me!');
         	
         	var allowedDomain = !event.origin ? '*' : event.origin;
-        	var params = JSON.parse(event.data);
+        	var payload = JSON.parse(event.data);
+        	var call_id = payload['call_id'];
+        	var params = payload['params']
 					
 					params['success'] = function(data, status, xhr) {
-						var content = {
+						var payload = {
 							result: 'success',
 							'status': status,
+							'call_id': call_id,
 							response: data
 						} 
-						event.source.postMessage(JSON.stringify(content),  
+						event.source.postMessage(JSON.stringify(payload),  
                            allowedDomain);	
 					};
 					
 					params['error'] = function(xhr, status, errorThrown) {
-						var content = {
+						var payload = {
 							result: 'error',
 							'status': status,
+							'call_id': call_id,
 							response: errorThrown
 						}
-						event.source.postMessage(JSON.stringify(content),  
+						event.source.postMessage(JSON.stringify(payload),  
                            allowedDomain);	
 					};
 					
