@@ -17,6 +17,9 @@
 		<script type="text/javascript">
       $(document).ready(function() {
 
+				/**
+				 * Double check to see if we can reuse logic from StackMob.js core
+				 */
         window.addEventListener('message', function(event) {
           if(event.origin == "http://127.0.0.1:4567") {
 
@@ -27,8 +30,18 @@
 
             params['success'] = function(data, status, xhr) {
             	
-            	if (params["stackmob_count"] === true) {
-                data = xhr;
+            	if (params["stackmob_count"] === true && xhr && xhr.getAllResponseHeaders) {
+	              var responseHeader = xhr
+	                  .getResponseHeader('Content-Range');
+	              var count = -1;
+	              if (responseHeader) {
+	                count = responseHeader.substring(
+	                    responseHeader.indexOf('/') + 1,
+	                    responseHeader.length)
+	              }
+	
+	              data = count;
+	              
               }
               
               var payload = {
