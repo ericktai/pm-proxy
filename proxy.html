@@ -22,10 +22,11 @@
   	
   	
   	window.addEventListener('message', function(event) {
-        //if (event.origin == "http://127.0.0.1:4567") {
+        if (event.origin == "http://127.0.0.1:4567" || !event.origin) {
         	
         	console.debug('Client is calling me!');
         	
+        	var allowedDomain = !event.origin ? '*' : event.origin;
         	var params = JSON.parse(event.data);
 					
 					params['success'] = function(data, status, xhr) {
@@ -35,7 +36,7 @@
 							response: data
 						} 
 						event.source.postMessage(JSON.stringify(content),  
-                           event.origin);	
+                           allowedDomain);	
 					};
 					
 					params['error'] = function(xhr, status, errorThrown) {
@@ -44,14 +45,14 @@
 							'status': status,
 							response: errorThrown
 						}
-						
-						event.source.postMessage(JSON.stringify(content), '*');	
+						event.source.postMessage(JSON.stringify(content),  
+                           allowedDomain);	
 					};
 					
+					        	
         	$.ajax(params);
-        	
-           
-        //}
+        } 
+        
       }, false);  
   	
   });
