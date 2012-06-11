@@ -46,13 +46,11 @@
 						}
 						
 						console.debug(JSON.stringify(content));
-						console.debug(event.source);
 						console.debug(window.parent);
 						
 						event.source.postMessage(JSON.stringify(content));	
 					};
 					
-					        	
         	$.ajax(params);
         	
            
