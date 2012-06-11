@@ -45,9 +45,6 @@
 							response: errorThrown
 						}
 						
-						console.debug(JSON.stringify(content));
-						console.debug(window.parent);
-						
 						event.source.postMessage(JSON.stringify(content), '*');	
 					};
 					
