@@ -22,7 +22,7 @@
   	
   	
   	window.addEventListener('message', function(event) {
-        if (_.contains(["http://127.0.0.1:4567", "file://"], event.origin)) {
+        if (_.contains(['*'], event.origin)) {
         	
         	console.debug('Client is calling me!');
         	
