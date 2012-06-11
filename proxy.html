@@ -20,7 +20,7 @@
         window.addEventListener('message', function(event) {
           if(event.origin == "http://127.0.0.1:4567") {
 
-            var allowedDomain = !event.origin ? '*' : event.origin;
+            var allowedDomain = event.origin;
             var payload = JSON.parse(event.data);
             var call_id = payload['call_id'];
             var params = payload['params']
