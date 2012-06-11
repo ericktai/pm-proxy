@@ -42,12 +42,22 @@
                            allowedDomain);	
 					};
 					
-					params['error'] = function(xhr, status, errorThrown) {
+					params['error'] = function(jqXHR, status, errorThrown) {
+						
+						var data = null;
+						
+						if (jqXHR && (jqXHR.responseText || jqXHR.text)) {
+              var result = JSON.parse(jqXHR.responseText
+                  || jqXHR.text);
+              data = result;
+            }
+            
 						var payload = {
 							result: 'error',
 							'status': status,
 							'call_id': call_id,
-							response: errorThrown
+							response: data,
+							error: errorThrown
 						}
 						event.source.postMessage(JSON.stringify(payload),  
                            allowedDomain);	
