@@ -22,6 +22,7 @@
   	
   	
   	window.addEventListener('message', function(event) {
+  		console.debug(event.origin);
         if (event.origin == "http://127.0.0.1:4567" || !event.origin) {
         	
         	console.debug('Client is calling me!');
