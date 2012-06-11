@@ -30,8 +30,6 @@
       
 				window.addEventListener('message', function(event) {
 		      if (event.origin == "http://dev.proxyexperiment.tai.stackmobapp.com") {
-		      	console.debug('Server got back to me');
-		      	console.debug(event.data);
 		      	
 		      	var payload = JSON.parse(event.data);
 		      	
@@ -41,13 +39,15 @@
 		      	var call_id = payload['call_id'];
 		      	
 		      	if (result === 'success') {
-		      		StackMob['callLog'][call_id]['success']();
-		      		StackMob['callLog'][call_id]['success'] = null;	
+		      		StackMob['callLog'][call_id]['success'](response);
 		      	} else {
-		      		StackMob['callLog'][call_id]['error']();
-		      		StackMob['callLog'][call_id]['error'] = null;	
+		      		StackMob['callLog'][call_id]['error'](StackMob['callLog'][call_id]['model'], response);
 		      	}
 		      	
+		      	//Cleanup
+		      	StackMob['callLog'][call_id]['success'] = null;
+		      	StackMob['callLog'][call_id]['error'] = null;	
+		      	StackMob['callLog'][call_id]['model'] = null;
 		      	delete StackMob['callLog'][call_id];
 		      }
 		    }, false);  
@@ -60,12 +60,47 @@
 			var success = params['success'];
 			var error = params['error'];
 			
-			var call_id = (new Date()).getTime() + '_' + method + '_' + model.get(model.getPrimaryKeyField());
+			var defaultSuccess = function(model) {
+				var result;
+        if (model && model.toJSON) {
+          result = model;
+        } else if (model
+            && (model.responseText || model.text)) {
+          var json = JSON.parse(model.responseText
+              || model.text);
+          result = json;
+        } else if (model) {
+          result = model;
+        }
+
+        if (_.isFunction(params['stackmob_on' + method]))
+          params['stackmob_on' + method]();
+
+        if (success) {
+          success(result);
+        }
+			};
+			
+			var defaultError = function(status, response) {
+				var data = response;
+
+        (function(m, d) {
+          if (error)
+            error(d);
+        }).call(StackMob, model, data);
+			}
+			
+			
+			var call_id = (new Date()).getTime() + '_' + method;
+			
+			//collections vs. models.
+			if (model.getPrimaryKeyField) call_id += '_' + model.get(model.getPrimaryKeyField());
 			
 			StackMob['callLog'][call_id] = {};
 			
-			StackMob['callLog'][call_id]['success'] = success;
-			StackMob['callLog'][call_id]['error'] = error;
+			StackMob['callLog'][call_id]['success'] = defaultSuccess;
+			StackMob['callLog'][call_id]['error'] = defaultError;
+			StackMob['callLog'][call_id]['model'] = model;
 			
 			var payload = {
 				'call_id': call_id,
