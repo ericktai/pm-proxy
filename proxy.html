@@ -26,6 +26,11 @@
             var params = payload['params']
 
             params['success'] = function(data, status, xhr) {
+            	
+            	if (params["stackmob_count"] === true) {
+                data = xhr;
+              }
+              
               var payload = {
                 result : 'success',
                 'status' : status,
@@ -34,6 +39,7 @@
               }
               event.source.postMessage(JSON.stringify(payload), allowedDomain);
             };
+            
             params['error'] = function(jqXHR, status, errorThrown) {
 
               var data = null;
@@ -42,7 +48,7 @@
                 var result = JSON.parse(jqXHR.responseText || jqXHR.text);
                 data = result;
               }
-
+              
               var payload = {
                 result : 'error',
                 'status' : status,
