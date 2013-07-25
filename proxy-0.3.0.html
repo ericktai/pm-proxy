@@ -48,12 +48,12 @@
 		</script>
 		<script type="text/javascript">
       $(document).ready(function() {
-
-				/**
-				 * Double check to see if we can reuse logic from StackMob.js core
-				 */
+      		/**
+      		Change this to the domain from where you are making your calls
+      		*/
+      		var whiteListedDomain = 'http://127.0.0.1:4567'
         window.addEventListener('message', function(event) {
-          if(true) {
+          if(event.origin == whiteListedDomain) {
 
             var allowedDomain = event.origin;
             var payload = JSON.parse(event.data);
@@ -62,20 +62,20 @@
 
             params['success'] = function(data, status, xhr) {
             	
-            	//Yanked from StackMob.js Core
-            	if (params["stackmob_count"] === true && xhr && xhr.getAllResponseHeaders) {
-	              var responseHeader = xhr
-	                  .getResponseHeader('Content-Range');
-	              var count = -1;
-	              if (responseHeader) {
-	                count = responseHeader.substring(
-	                    responseHeader.indexOf('/') + 1,
-	                    responseHeader.length)
-	              }
+            	// //Yanked from StackMob.js Core
+            	// if (params["stackmob_count"] === true && xhr && xhr.getAllResponseHeaders) {
+	            //   var responseHeader = xhr
+	            //       .getResponseHeader('Content-Range');
+	            //   var count = -1;
+	            //   if (responseHeader) {
+	            //     count = responseHeader.substring(
+	            //         responseHeader.indexOf('/') + 1,
+	            //         responseHeader.length)
+	            //   }
 	
-	              data = count;
+	            //   data = count;
 	              
-              }
+             //  }
               
               var payload = {
                 result : 'success',
