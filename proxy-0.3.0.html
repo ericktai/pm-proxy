@@ -1,5 +1,37 @@
 <html>
 	<head>
+		<!--
+			***********************************************************
+			***********************************************************
+			* STACKMOB CROSS DOMAIN PROXY - USING postMessage
+			* 
+			* ****************** WHAT IS THIS? ******************
+			* 
+			* This HTML file helps enable cross domain AJAX calls via HTML5's postMessage feature.
+			* 
+			* This is the complementary file to stackmob-proxy-x.x.x.js.  They work together.
+			* 
+			* This file should sit on a StackMob hosted server.
+			* 
+			* 
+			* ****************** WHAT DO I NEED TO CHANGE? ******************
+			* 
+			* Change StackMob.init({...}) to your app's information
+			* 
+			* ****************** WHERE DO I PUT THIS FILE? ******************
+			* 
+			* This HTML file should live on a StackMob hosted server on the server-side, alongside your other HTML files.  (So go ahead and stick it in your GitHub repo).  It can be in any folder.
+			* 
+			* E.g.,
+			* 
+			* //Put it on any hosted StackMob site
+			* http://yourapp.yoursubdomain.stackmobapp.com/proxy-0.3.0.html   
+			* http://www.yourdomain.com/proxy-0.3.0.html  <-- assuming this is StackMob hosted using our custom domains feature
+			*.
+			* 
+			***********************************************************
+			***********************************************************
+		-->
 		<title>AJAX Proxy</title>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
 		<script type="text/javascript" src="http://static.stackmob.com/js/json2-min.js"></script>
@@ -83,6 +115,5 @@
 		</script>
 	</head>
 	<body>
-		This is the server side.
 	</body>
 </html>
