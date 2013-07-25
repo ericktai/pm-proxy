@@ -4,6 +4,9 @@
  * 
  */
 _.extend(StackMob, {
+  HOSTED_DOMAIN: 'dev.proxyexperiment.tai.stackmobapp.com',
+
+  getBaseURL: function() { return this.HOSTED_DOMAIN + '/'; },
 
   initStart : function(options) {
     if(options['proxy']) {
@@ -22,7 +25,7 @@ _.extend(StackMob, {
       this.proxyframe = frame;
 
       window.addEventListener('message', function(event) {
-        if(event.origin == "http://dev.proxyexperiment.tai.stackmobapp.com") {
+        if(event.origin == ("http://" + this.HOSTED_DOMAIN)) {
 
           var payload = JSON.parse(event.data);
 
@@ -95,6 +98,7 @@ _.extend(StackMob, {
       'params' : params
     };
 
+console.log('sending payload: ' + JSON.stringify(payload));
     if(StackMob['proxyframe'])
       StackMob['proxyframe'].contentWindow.postMessage(JSON.stringify(payload), 'http://dev.proxyexperiment.tai.stackmobapp.com');
     else

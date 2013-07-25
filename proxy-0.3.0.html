@@ -84,9 +84,6 @@
                 response : data
               }
 
-              console.debug(event);
-              console.debug(event.source);
-              console.debug(allowedDomain);
               event.source.postMessage(JSON.stringify(payload), allowedDomain);
             };
             
@@ -107,14 +104,9 @@
                 response : data,
                 error : errorThrown
               }
-              console.debug(event);
-              console.debug(event.source);
 
               event.source.postMessage(JSON.stringify(payload), allowedDomain);
             };
-
-            console.log('PARAMS:');
-            console.log(params);
 
             $.ajax(params);
           }
