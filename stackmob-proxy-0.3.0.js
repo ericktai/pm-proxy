@@ -4,6 +4,12 @@
  * 
  */
 _.extend(StackMob, {
+
+  /**
+  Change this domain to the domain of your proxy.html
+
+  e.g. my file lives at http://dev.proxyexperiment.tai.stackmobapp.com/proxy-0.3.0.html
+  */
   HOSTED_DOMAIN: 'dev.proxyexperiment.tai.stackmobapp.com',
 
   getBaseURL: function() { return this.HOSTED_DOMAIN + '/'; },
@@ -56,33 +62,43 @@ _.extend(StackMob, {
   'ajax' : function(model, params, method) {
     var success = params['success'];
     var error = params['error'];
-
-    var defaultSuccess = function(model) {
+    
+    var defaultSuccess = function(response, status, xhr) {
       var result;
-      if(model && model.toJSON) {
-        result = model;
-      } else if(model && (model.responseText || model.text)) {
-        var json = JSON.parse(model.responseText || model.text);
-        result = json;
-      } else if(model) {
-        result = model;
-      }
 
-      if(_.isFunction(params['stackmob_on' + method]))
-        params['stackmob_on' + method]();
+      if(params["stackmob_count"] === true) {
+        result = xhr;
+      } else if(response && response.toJSON) {
+        result = response;
+      } else if(response && (response.responseText || response.text)) {
+        var result;
 
-      if(success) {
-        success(result);
+        try {
+          result = JSON.parse(response.responseText || response.text);
+        } catch (e) {
+          result = response.responseText || response.text;
+        }
+      } else if(response) {
+        result = response;
       }
+      StackMob.onsuccess(model, method, params, result, success, options);
+
     };
-    var defaultError = function(status, response) {
-      var data = response;
+    
+    params['success'] = defaultSuccess;
 
-      (function(m, d) {
-        if(error)
-          error(d);
-      }).call(StackMob, model, data);
-    }
+
+    params['error'] = function(jqXHR, textStatus, errorThrown) {
+      // Workaround for Android broswers not recognizing HTTP status code 206.
+      // Call the success method on HTTP Status 0 (the bug) and when a range was specified.
+      if (jqXHR.status === 0 && params['query'] && (typeof params['query']['range'] === 'object')){
+        this.success(jqXHR, textStatus, errorThrown);
+        return;
+      }
+      var responseText = jqXHR.responseText || jqXHR.text;
+      StackMob.onerror(jqXHR, responseText, $.ajax, model, params, error, options);
+    };
+
     var call_id = (new Date()).getTime() + '_' + method;
 
     //collections vs. models.
