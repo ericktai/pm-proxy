@@ -83,6 +83,10 @@
                 'call_id' : call_id,
                 response : data
               }
+
+              console.debug(event);
+              console.debug(event.source);
+              console.debug(allowedDomain);
               event.source.postMessage(JSON.stringify(payload), allowedDomain);
             };
             
