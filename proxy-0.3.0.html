@@ -106,6 +106,9 @@
               event.source.postMessage(JSON.stringify(payload), allowedDomain);
             };
 
+            console.log('PARAMS:');
+            console.log(params);
+
             $.ajax(params);
           }
 
