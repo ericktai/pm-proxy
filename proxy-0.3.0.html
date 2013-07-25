@@ -62,20 +62,11 @@
 
             params['success'] = function(data, status, xhr) {
             	
-            	// //Yanked from StackMob.js Core
-            	// if (params["stackmob_count"] === true && xhr && xhr.getAllResponseHeaders) {
-	            //   var responseHeader = xhr
-	            //       .getResponseHeader('Content-Range');
-	            //   var count = -1;
-	            //   if (responseHeader) {
-	            //     count = responseHeader.substring(
-	            //         responseHeader.indexOf('/') + 1,
-	            //         responseHeader.length)
-	            //   }
-	
-	            //   data = count;
-	              
-             //  }
+				//Yanked from StackMob.js Core
+				if (params["stackmob_count"] === true && xhr && xhr.getAllResponseHeaders) {
+					data = xhr;
+
+				}
               
               var payload = {
                 result : 'success',
