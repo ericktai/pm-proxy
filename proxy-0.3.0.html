@@ -103,6 +103,9 @@
                 response : data,
                 error : errorThrown
               }
+              console.debug(event);
+              console.debug(event.source);
+
               event.source.postMessage(JSON.stringify(payload), allowedDomain);
             };
 
