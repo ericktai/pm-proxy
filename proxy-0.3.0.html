@@ -55,7 +55,7 @@
         window.addEventListener('message', function(event) {
           if(true) {
 
-            var allowedDomain = event.origin;
+            var allowedDomain = '*'; //event.origin;
             var payload = JSON.parse(event.data);
             var call_id = payload['call_id'];
             var params = payload['params']
