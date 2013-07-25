@@ -61,9 +61,11 @@
             var params = payload['params']
 
             params['success'] = function(data, status, xhr) {
-            	
+            	console.debug(params['stackmob_count']);
+            	console.debug(xhr);
+
 				//Yanked from StackMob.js Core
-				if (params["stackmob_count"] === true && xhr && xhr.getAllResponseHeaders) {
+				if (params["stackmob_count"] === true && xhr) {
 					data = xhr;
 
 				}
