@@ -84,8 +84,6 @@
                 response : data
               }
 
-console.log("allowed domain: " + allowedDomain);
-
               event.source.postMessage(JSON.stringify(payload), allowedDomain);
             };
             

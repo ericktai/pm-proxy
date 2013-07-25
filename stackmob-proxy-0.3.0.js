@@ -24,8 +24,10 @@ _.extend(StackMob, {
 
       this.proxyframe = frame;
 
+      var dis = this;
+
       window.addEventListener('message', function(event) {
-        if(event.origin == ("http://" + this.HOSTED_DOMAIN)) {
+        if(event.origin == ("http://" + dis.HOSTED_DOMAIN)) {
 
           var payload = JSON.parse(event.data);
 
