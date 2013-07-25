@@ -98,9 +98,8 @@ _.extend(StackMob, {
       'params' : params
     };
 
-console.log('sending payload: ' + JSON.stringify(payload));
     if(StackMob['proxyframe'])
-      StackMob['proxyframe'].contentWindow.postMessage(JSON.stringify(payload), 'http://dev.proxyexperiment.tai.stackmobapp.com');
+      StackMob['proxyframe'].contentWindow.postMessage(JSON.stringify(payload), ('http://' + this.HOSTED_DOMAIN));
     else
       throwError('No proxy frame found.');
   }
