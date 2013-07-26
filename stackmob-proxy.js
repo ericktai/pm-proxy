@@ -13,6 +13,9 @@ _.extend(StackMob, {
       url = url.match(/^([^\/?#]+)(?:[\/?#]|$)/i, "");
     return url[1];
   },
+  
+  //setting this so that OAuth 2.0 requests are signed with the proxy frame's URL
+  //this is consumed by Authorization generating methods
   getBaseURL : function() {
     return this.getHostedDomain() + '/';
   },
