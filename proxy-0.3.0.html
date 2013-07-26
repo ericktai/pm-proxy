@@ -66,7 +66,7 @@
                 result : 'success',
                 'status' : status,
                 'call_id' : call_id,
-                response : data
+                response : JSON.stringify(data)
               }
 
               event.source.postMessage(JSON.stringify(payload), allowedDomain);
@@ -86,7 +86,7 @@
                 result : 'error',
                 'status' : status,
                 'call_id' : call_id,
-                response : data,
+                response : JSON.stringify(data),
                 error : errorThrown
               }
 
