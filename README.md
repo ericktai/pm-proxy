@@ -1,4 +1,4 @@
-StackMob Cross Domain Proxy - window.postMessage
+Making StackMob cross domain calls without CORS
 ========
 
 ## Overview
