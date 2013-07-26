@@ -1,4 +1,4 @@
-Making StackMob cross domain calls without CORS
+Making StackMob cross domain calls with postMessage, not CORS
 ========
 
 ## Overview
