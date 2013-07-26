@@ -71,7 +71,9 @@ _.extend(StackMob, {
             StackMob['callLog'][call_id]['error'](result, response, status, statusCode);
           }
 
-          //Cleanup
+          //Cleanup call logs since we don't need to keep track of this anymore.
+          //TODO: maybe in the case of 503 (custom code is starting up) or 302 (API redirect),
+          //we will need to keep this around.
           delete StackMob['callLog'][call_id]['success'];
           delete StackMob['callLog'][call_id]['error'];
           delete StackMob['callLog'][call_id]['model'];
@@ -89,27 +91,29 @@ _.extend(StackMob, {
   //override the AJAX call to instead make a postMessage call to the iframe
   'ajax' : function(model, params, method, options) {
     
-    //save the original success/error calls.  we're going to overwrite them to deal with the 
-    //postMessage callbacks
+    //get pointers to the original success/error calls.
     var originalSuccess = params['success'];
     var originalError = params['error'];
 
     //change the success function so that we can process things in the postMessage callbacks above
-    var delayedSuccess = function(result, response, status) {
+    var processProxySuccess = function(result, response, status) {
+      //when the proxy tells us it's done via a postMessage, then let's process the results
+      //via the StackMob JS SDK as we normally do.
       StackMob.onsuccess(model, method, params, response, originalSuccess, options);
     };
-    params['success'] = delayedSuccess;
 
     //change the error function so that we can process things in the postMessage callbacks above
-    var delayedError = function(result, response, status, statusCode) {
-      var jqXHR = {
-        status : statusCode
-      };
+    var processProxyError = function(result, response, status, statusCode) {
+      
+      //because we aren't using AJAX, we're fudging things around here so that it will adhere to
+      //the existing StackMob.onerror(..) signature
+      var jqXHR = { status : statusCode };
       var responseAsString = JSON.stringify(response);
+      
+      //when the proxy tells us it's done via a postMessage, then let's process the results
+      //via the StackMob JS SDK as we normally do.
       StackMob.onerror(jqXHR, responseAsString, $.ajax, model, params, originalError, options);
     };
-    
-    params['error'] = delayedError;
 
     //generate an ID for this call so that we can keep track of the outbound proxied requests
     var call_id = (new Date()).getTime() + '_' + method;
@@ -118,11 +122,11 @@ _.extend(StackMob, {
     if(model.getPrimaryKeyField)
       call_id += '_' + model.get(model.getPrimaryKeyField());
 
-
+    //save a reference to this outbound call so that when the iframe returns with the response, we
+    //can look it up and call the proper success/error methods, models, and options
     StackMob['callLog'][call_id] = {};
-
-    StackMob['callLog'][call_id]['success'] = delayedSuccess;
-    StackMob['callLog'][call_id]['error'] = delayedError;
+    StackMob['callLog'][call_id]['success'] = processProxySuccess;
+    StackMob['callLog'][call_id]['error'] = processProxyError;
     StackMob['callLog'][call_id]['model'] = model;
     StackMob['callLog'][call_id]['options'] = options;
 
