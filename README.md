@@ -11,7 +11,7 @@ StackMob supports CORS, but not all browsers do.  This is a workaround using HTM
 
 An HTML5 feature called `postMessage` lets two windows/frames within your browser to talk to each other.  We'll load an iframe on your HTML page, and that iframe will contain a page on StackMob's hosted server.  That iframe page is now technically on the same domain and can make same-domain AJAX calls with no special CORS settings.  It's just a regular AJAX call, thereby offering you the widest browser support.
 
-Your page will use a modified version of the StackMob JS SDK that uses `postMessage` to communicate with the iframe to make AJAX calls on your behalf.  With `postMessage`, the two windows will communicate with each other, passing request and response information between them, and your StackMob JS SDK will effectively have the same behavior.
+Your page will use a modified version of the StackMob JS SDK that uses `postMessage` to communicate with the iframe to make AJAX calls on your behalf.  With `postMessage`, the two windows will communicate with each other, passing request and response information between them, and your StackMob JS SDK will effectively have the same behavior.  But don't worry, all the heavy lifting is done for you already in `stackmob-proxy.js` and its counterpart `proxy.html`.
 
 ## What's needed
 
