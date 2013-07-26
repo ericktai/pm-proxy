@@ -61,7 +61,7 @@
             var params = payload['params']
 
             params['success'] = function(data, status, xhr) {
-              
+              console.debug(data);
               var payload = {
                 result : 'success',
                 'status' : status,
