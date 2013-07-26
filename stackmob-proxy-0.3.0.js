@@ -5,6 +5,15 @@
  */
 _.extend(StackMob, {
 
+  parseDomain: function (url) {
+      var url = $.trim(url);
+      if(url.search(/^https?\:\/\//) != -1)
+          url = url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i, "");
+      else
+          url = url.match(/^([^\/?#]+)(?:[\/?#]|$)/i, "");
+      return url[1];
+  },
+
   /**
   Change this domain to the domain of your proxy.html
 
@@ -12,14 +21,18 @@ _.extend(StackMob, {
   */
   getBaseURL: function() { return this.getHostedDomain() + '/'; },
 
-  getHostedDomain: function() { return this.hostedDomain; },
+  getHostedDomain: function() {
+    this.hostedDomain = this.hostedDomain || this.parseDomain(this.proxyURL); 
+    return this.hostedDomain;
+  },
 
   initStart : function(options) {
-    if(options['proxy']) {
+    if(options['proxyURL']) {
+      this.proxyURL = options['proxyURL'];
 
       //Auto add an iframe to hold the remote HTML page
       var frame = document.createElement('iframe');
-      frame.setAttribute('src', options['proxy'] || throwError('No proxy frame URL provided.'));
+      frame.setAttribute('src', this.proxyURL || throwError('No proxy frame URL provided.'));
       frame.setAttribute('id', 'theiframe');
       frame.setAttribute('width', '0px');
       frame.setAttribute('height', '0px');
