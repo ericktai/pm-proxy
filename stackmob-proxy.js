@@ -52,8 +52,8 @@ _.extend(StackMob, {
       //have a postmessage listener that listens to messages sent back from the iframe
       window.addEventListener('message', function(event) {
         //only listen to calls from the iframe domain
-        //you will need to change this to https if your proxyURL is https
-        if(event.origin == ("http://" + dis.hostedDomain)) {
+        var scheme = dis.proxyURL.indexOf('https://') == -1 ? 'http://' : 'https://';
+        if(event.origin == (scheme + dis.hostedDomain)) {
 
           //this should include the response and other call details from the iframe JS SDK ajax request.
           var payload = JSON.parse(event.data);
