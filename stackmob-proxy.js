@@ -32,7 +32,7 @@ _.extend(StackMob, {
       //Auto add an iframe to hold the remote HTML page
       var frame = document.createElement('iframe');
       frame.setAttribute('src', this.proxyURL || throwError('No proxy frame URL provided.'));
-      frame.setAttribute('id', 'theiframe');
+      frame.setAttribute('id', 'proxy');
       frame.setAttribute('width', '0px');
       frame.setAttribute('height', '0px');
       frame.setAttribute('frameborder', '0');
@@ -113,9 +113,9 @@ _.extend(StackMob, {
       'params' : params
     };
 
-    if(StackMob['proxyframe'])
+    if(StackMob['proxyframe']) {
       StackMob['proxyframe'].contentWindow.postMessage(JSON.stringify(payload), ('http://' + this.getHostedDomain()));
-    else
+    } else
       throwError('No proxy frame found.');
   }
 });

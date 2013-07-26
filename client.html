@@ -2,7 +2,7 @@
 	<head>
 		<title>AJAX Client</title>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-<script type="text/javascript" src="http://static.stackmob.com/js/stackmob-js-0.9.1-bundled-min.js"></script>
+		<script type="text/javascript" src="http://static.stackmob.com/js/stackmob-js-0.9.1-bundled-min.js"></script>
 		<script type="text/javascript" src="stackmob-proxy.js"></script>
 		<script type="text/javascript">
       StackMob.init({
@@ -14,9 +14,41 @@
 		</script>
 	</head>
 	<body>
-		<h1>Cross Domain AJAX calls with <code>window.postMessage</code></h1>
+		<h1>Cross Domain AJAX calls with <code>
+			window.postMessage</code></h1>
 		<p>
-			We'll demonstrate cross domain StackMob API ajax calls by proxying the calls through an iframe.  The iframe loads a static HTML file on the origin domain, the URL of which is defined by <code>proxyURL</code> in <code>StackMob.init</code> above.
+			Check the console for test results.
+<pre><code>
+var users = new StackMob.Users();
+var q = new StackMob.Collection.Query();
+users.query(q, { 
+	success: function(x) { 
+		console.debug(x.toJSON()); 
+	}, 
+	error: function(fail, message) { 
+		console.debug(message); 
+	}
+});	
+</code></pre>
 		</p>
+		<p></p>
+		<script type="text/javascript" charset="utf-8">
+		$(document).ready(function() { //wait for the iframe tag to load
+			$('#proxy').load(function() { //wait for the contents of the iframe to load
+				//now you're ready to start making cross domain calls
+				
+        var users = new StackMob.Users();
+        var q = new StackMob.Collection.Query();
+        users.query(q, {
+          success : function(x) {
+            console.debug(x.toJSON());
+          },
+          error : function(fail, message) {
+            console.debug(message);
+          }
+        });
+    	});
+		});
+		</script>
 	</body>
 </html>
