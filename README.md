@@ -33,22 +33,22 @@ Your page will use a modified version of the StackMob JS SDK that uses `postMess
         });
 
 3.  Modify the `whiteListedDomain` in `proxy.html`.  If your domain is `http://www.mysite.com` then:
-        ```
+
         var whiteListedDomain = 'http://www.mysite.com';
-        ```
+
 4.  Deploy `proxy.html` to the hosting service - it's now on the web
 5.  Include `stackmob-proxy.js` in **your** HTML pages immediately after the included StackMob JS SDK.  It's an extension.
-        ```
+
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
         <script type="text/javascript" src="http://static.stackmob.com/js/stackmob-js-0.9.1-bundled-min.js"></script>
         <script type="text/javascript" src="stackmob-proxy.js"></script>
-        ```
+
 6.  Initialize your pages' StackMob JS SDK
-        ```
+
         StackMob.init({
           publicKey : [your public key],
           proxyURL : 'http://[your StackMob hosted domain]/proxy.html', //note this line!
           apiVersion : 0
         });
-        ```
+
 7.  Start making JS SDK calls as you normally would!
