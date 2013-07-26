@@ -19,7 +19,9 @@
 		<script type="text/javascript">
       $(document).ready(function() {
 
+	//listen to call proxy requests coming from the client page.
         window.addEventListener('message', function(event) {
+          //only listen to call proxies from white listed domains
           if(event.origin == whiteListedDomain) {
 
             var allowedDomain = event.origin;
@@ -27,6 +29,9 @@
             var call_id = payload['call_id'];
             var params = payload['params']
 
+	    //overwrite the success function completely.  this instance of the JS SDK doesn't care about the
+	    //user's success method.  This JS SDK instance just needs to send the 
+	    //raw response back to the call proxy requester
             params['success'] = function(data, status, xhr) {
               var payload = {
                 result : 'success',
@@ -34,9 +39,12 @@
                 'call_id' : call_id,
                 response : JSON.stringify(data)
               }
-
+	      
+	      //send the serialized response back to the parent frame
               event.source.postMessage(JSON.stringify(payload), allowedDomain);
             };
+            
+            //same here, serialize the response back to the parent frame, disregarding the user's error method
             params['error'] = function(jqXHR, status, errorThrown) {
 
               var data = null;
@@ -59,6 +67,8 @@
               event.source.postMessage(JSON.stringify(payload), allowedDomain);
             };
 
+	    //make the AJAX call according to the params (request details) that the call proxy requester sent
+	    //"hey, can you run this call for me?  here're the details of what to do: params"
             $.ajax(params);
           }
 
