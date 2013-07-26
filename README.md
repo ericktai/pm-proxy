@@ -76,10 +76,10 @@ $(document).ready(function() { //wait for the iframe tag to load
           //when the iframe's JS SDK gets a response, it'll pass it back to your JS SDK...
           //which in turn processes the response and calls success/error as expected
           success : function(model, response, options) {
-            console.debug(x.toJSON());
+            console.debug(model.toJSON());
           },
           error : function(model, response, options) {
-            console.debug(message);
+            console.debug(response);
           }
         });    
   });
