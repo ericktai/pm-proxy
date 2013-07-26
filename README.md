@@ -59,3 +59,16 @@ You will also need a <a href="http://www.github.com" target="_blank">GitHub</a> 
         });
 
 7.  Start making JS SDK calls as you normally would!
+
+**You must make calls after the iframe loads**:
+
+```
+$(document).ready(function() { //wait for the iframe tag to load
+  $('#proxy').load(function() { //wait for the contents of the iframe to load
+    
+    //now you're ready to start making cross domain calls
+    
+    //MAKE SDK CALLS HERE
+  });
+});
+```
