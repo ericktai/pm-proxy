@@ -42,7 +42,7 @@ You will also need a <a href="http://www.github.com" target="_blank">GitHub</a> 
         var whiteListedDomain = 'http://www.mysite.com';
 
 4.  Deploy `proxy.html` to <a href="https://marketplace.stackmob.com/module/html5" target="_blank">StackMob's Hosting service</a> (<a href="https://developer.stackmob.com/module/html5" target="_blank">how-to here</a>)
-5.  Include `stackmob-proxy.js` in **your** HTML pages immediately after the included StackMob JS SDK.  It's an extension.
+5.  Include `stackmob-proxy.js` in **your** HTML pages (e.g `client.html` in this case) immediately after the included StackMob JS SDK.  It's an extension.
 
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
         <script type="text/javascript" src="http://static.stackmob.com/js/stackmob-js-0.9.1-bundled-min.js"></script>
