@@ -67,6 +67,17 @@ $(document).ready(function() { //wait for the iframe tag to load
     //now you're ready to start making cross domain calls
     
     //MAKE SDK CALLS HERE
+    
+        var users = new StackMob.Users();
+        var q = new StackMob.Collection.Query();
+        users.query(q, {
+          success : function(x) {
+            console.debug(x.toJSON());
+          },
+          error : function(fail, message) {
+            console.debug(message);
+          }
+        });    
   });
 });
 ```
