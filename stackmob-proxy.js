@@ -3,10 +3,11 @@
  *
  *
  */
-_.extend(StackMob, {
+ _.extend(StackMob, {
 
   parseDomain : function(url) {
-    var url = $.trim(url);
+    url = $.trim(url);
+
     if(url.search(/^https?\:\/\//) != -1)
       url = url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i, "");
     else
@@ -18,7 +19,7 @@ _.extend(StackMob, {
 
    e.g. my file lives at http://dev.proxyexperiment.tai.stackmobapp.com/proxy-0.3.0.html
    */
-  getBaseURL : function() {
+   getBaseURL : function() {
     return this.getHostedDomain() + '/';
   },
   getHostedDomain : function() {
@@ -97,7 +98,7 @@ _.extend(StackMob, {
 
     var call_id = (new Date()).getTime() + '_' + method;
 
-    //collections vs. models.
+    // Collections vs. models.
     if(model.getPrimaryKeyField)
       call_id += '_' + model.get(model.getPrimaryKeyField());
 
@@ -116,6 +117,6 @@ _.extend(StackMob, {
     if(StackMob['proxyframe']) {
       StackMob['proxyframe'].contentWindow.postMessage(JSON.stringify(payload), ('http://' + this.getHostedDomain()));
     } else
-      throwError('No proxy frame found.');
+    throwError('No proxy frame found.');
   }
 });

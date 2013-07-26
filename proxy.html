@@ -1,23 +1,23 @@
 <html>
-	<head>
-		<title>AJAX Proxy</title>
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-<script type="text/javascript" src="http://static.stackmob.com/js/stackmob-js-0.9.2-bundled-min.js"></script>
-		<script type="text/javascript">
-      StackMob.init({
-        publicKey : 'b4670ece-8d14-4859-a149-690f4ce62bba',
-        useRelativePathForAjax : true,
-        apiVersion : 0
-      });
+<head>
+  <title>AJAX Proxy</title>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  <script type="text/javascript" src="http://static.stackmob.com/js/stackmob-js-0.9.2-bundled-min.js"></script>
+  <script type="text/javascript">
+  StackMob.init({
+    publicKey : 'b4670ece-8d14-4859-a149-690f4ce62bba',
+    useRelativePathForAjax : true,
+    apiVersion : 0
+});
 
       /**
        Change this to the domain from where you are making your calls
        */
-      var whiteListedDomain = 'http://127.0.0.1:4567';
+       var whiteListedDomain = 'http://127.0.0.1:4567';
 
-		</script>
-		<script type="text/javascript">
-      $(document).ready(function() {
+       </script>
+       <script type="text/javascript">
+       $(document).ready(function() {
 
         window.addEventListener('message', function(event) {
           if(event.origin == whiteListedDomain) {
@@ -33,39 +33,39 @@
                 'status' : status,
                 'call_id' : call_id,
                 response : JSON.stringify(data)
-              }
+            }
 
-              event.source.postMessage(JSON.stringify(payload), allowedDomain);
-            };
-            params['error'] = function(jqXHR, status, errorThrown) {
+            event.source.postMessage(JSON.stringify(payload), allowedDomain);
+        };
+        params['error'] = function(jqXHR, status, errorThrown) {
 
-              var data = null;
+          var data = null;
 
               //Yanked from StackMob.js Core
               if(jqXHR && (jqXHR.responseText || jqXHR.text)) {
                 var result = JSON.parse(jqXHR.responseText || jqXHR.text);
                 data = result;
-              }
+            }
 
-              var payload = {
+            var payload = {
                 result : 'error',
                 'status' : status,
                 'call_id' : call_id,
                 response : JSON.stringify(data),
                 statusCode : jqXHR.status,
                 error : errorThrown
-              }
+            }
 
-              event.source.postMessage(JSON.stringify(payload), allowedDomain);
-            };
+            event.source.postMessage(JSON.stringify(payload), allowedDomain);
+        };
 
-            $.ajax(params);
-          }
+        $.ajax(params);
+    }
 
-        }, false);
-      });
+}, false);
+});
 
-		</script>
-	</head>
-	<body></body>
+</script>
+</head>
+<body></body>
 </html>
