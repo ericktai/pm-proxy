@@ -40,11 +40,11 @@ users.query(q, {
         var users = new StackMob.Users();
         var q = new StackMob.Collection.Query();
         users.query(q, {
-          success : function(x) {
-            console.debug(x.toJSON());
+          success : function(model, response, options) {
+            console.debug(model.toJSON());
           },
-          error : function(fail, message) {
-            console.debug(message);
+          error : function(model, response, options) {
+            console.debug(response);
           }
         });
     	});
