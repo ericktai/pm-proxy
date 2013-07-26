@@ -1,31 +1,30 @@
 /**
  * Start of Cross-Domain plugin
- * 
- * 
+ *
+ *
  */
 _.extend(StackMob, {
 
-  parseDomain: function (url) {
-      var url = $.trim(url);
-      if(url.search(/^https?\:\/\//) != -1)
-          url = url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i, "");
-      else
-          url = url.match(/^([^\/?#]+)(?:[\/?#]|$)/i, "");
-      return url[1];
+  parseDomain : function(url) {
+    var url = $.trim(url);
+    if(url.search(/^https?\:\/\//) != -1)
+      url = url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i, "");
+    else
+      url = url.match(/^([^\/?#]+)(?:[\/?#]|$)/i, "");
+    return url[1];
   },
-
   /**
-  Change this domain to the domain of your proxy.html
+   Change this domain to the domain of your proxy.html
 
-  e.g. my file lives at http://dev.proxyexperiment.tai.stackmobapp.com/proxy-0.3.0.html
-  */
-  getBaseURL: function() { return this.getHostedDomain() + '/'; },
-
-  getHostedDomain: function() {
-    this.hostedDomain = this.hostedDomain || this.parseDomain(this.proxyURL); 
+   e.g. my file lives at http://dev.proxyexperiment.tai.stackmobapp.com/proxy-0.3.0.html
+   */
+  getBaseURL : function() {
+    return this.getHostedDomain() + '/';
+  },
+  getHostedDomain : function() {
+    this.hostedDomain = this.hostedDomain || this.parseDomain(this.proxyURL);
     return this.hostedDomain;
   },
-
   initStart : function(options) {
     if(options['proxyURL']) {
       this.proxyURL = options['proxyURL'];
@@ -60,7 +59,6 @@ _.extend(StackMob, {
           var status = payload['status'];
           var call_id = payload['call_id'];
 
-
           if(result === 'success') {
             StackMob['callLog'][call_id]['success'](result, response, status);
           } else {
@@ -77,29 +75,25 @@ _.extend(StackMob, {
       }, false);
     }
   },
-
   callLog : {},
 
   'ajax' : function(model, params, method, options) {
     var originalSuccess = params['success'];
     var originalError = params['error'];
-    
+
     var delayedSuccess = function(result, response, status) {
       StackMob.onsuccess(model, method, params, response, originalSuccess, options);
     };
-    
     params['success'] = delayedSuccess;
 
-
-
     var delayedError = function(result, response, status, statusCode) {
-      var jqXHR = { status: statusCode };
+      var jqXHR = {
+        status : statusCode
+      };
       var responseAsString = JSON.stringify(response);
       StackMob.onerror(jqXHR, responseAsString, $.ajax, model, params, originalError, options);
     };
-
     params['error'] = delayedError;
-
 
     var call_id = (new Date()).getTime() + '_' + method;
 
@@ -120,8 +114,7 @@ _.extend(StackMob, {
     };
 
     if(StackMob['proxyframe'])
-      StackMob['proxyframe'].contentWindow.postMessage(
-        JSON.stringify(payload), ('http://' + this.getHostedDomain()));
+      StackMob['proxyframe'].contentWindow.postMessage(JSON.stringify(payload), ('http://' + this.getHostedDomain()));
     else
       throwError('No proxy frame found.');
   }
