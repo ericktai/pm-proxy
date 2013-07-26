@@ -25,6 +25,8 @@ The approach involves three files:
 
 <b>You also need to use <a href="https://marketplace.stackmob.com/module/html5" target="_blank">StackMob's Hosting service</a></b> because it can support the AJAX calls properly (special logic on StackMob web servers).  Only `proxy.html` needs to be on the hosting service.  All your other HTML files can live on your servers.
 
+You will also need a <a href="http://www.github.com" target="_blank">GitHub</a> account for use with the Hosting service.
+
 
 ## Installation Instructions
 
