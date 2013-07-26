@@ -5,14 +5,14 @@
  */
 _.extend(StackMob, {
 
-  hostedDomain: 'dev.proxyexperiment.tai.stackmobapp.com',
-
   /**
   Change this domain to the domain of your proxy.html
 
   e.g. my file lives at http://dev.proxyexperiment.tai.stackmobapp.com/proxy-0.3.0.html
   */
-  getBaseURL: function() { return this.hostedDomain + '/'; },
+  getBaseURL: function() { return this.getHostedDomain() + '/'; },
+
+  getHostedDomain: function() { return this.hostedDomain; },
 
   initStart : function(options) {
     if(options['proxy']) {
@@ -108,7 +108,7 @@ _.extend(StackMob, {
 
     if(StackMob['proxyframe'])
       StackMob['proxyframe'].contentWindow.postMessage(
-        JSON.stringify(payload), ('http://' + this.hostedDomain));
+        JSON.stringify(payload), ('http://' + this.getHostedDomain()));
     else
       throwError('No proxy frame found.');
   }

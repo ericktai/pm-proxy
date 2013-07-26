@@ -45,13 +45,17 @@
         apiVersion : 0
       });
 
+            /**
+      		Change this to the domain from where you are making your calls
+      		*/
+      		var whiteListedDomain = 'http://127.0.0.1:4567';
+
+      		
+
 		</script>
 		<script type="text/javascript">
       $(document).ready(function() {
-      		/**
-      		Change this to the domain from where you are making your calls
-      		*/
-      		var whiteListedDomain = 'http://127.0.0.1:4567'
+
         window.addEventListener('message', function(event) {
           if(event.origin == whiteListedDomain) {
 
