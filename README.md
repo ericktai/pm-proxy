@@ -3,7 +3,11 @@ Making StackMob cross domain calls without CORS
 
 ## Overview
 
-StackMob's JavaScript SDK uses AJAX to communicate with StackMob's API server: `https://api.stackmob.com`.  Normally cross domain AJAX calls are blocked by browsers' same-domain origin policies.  `https://mysite.com` normally can't make AJAX calls to `https://api.stackmob.com`.  But because StackMob supports HTML5's CORS (cross origin resource sharing), CORS is a valid solution for many people.  However CORS support isn't supported on all browsers (IE).  This is an alternative.
+Cross Origin Resource Sharing (CORS) is a way to enable cross domain calls, however not all browsers support it.  This is an alternative using HTML5's `postMessage` feature.
+
+## Background
+
+StackMob's JavaScript SDK uses AJAX to communicate with StackMob's API server: `https://api.stackmob.com`.  Normally cross domain AJAX calls are blocked by browsers' same-domain origin policies, blocking calls to `api.stackmob.com` from `mysite.com`.  StackMob supports CORS, but not all browsers do.  This is a workaround.
 
 ## How it works
 
@@ -19,12 +23,12 @@ The approach involves three files:
 2. `client.html` - any of your HTML pages, represented by `client.html` in this example
 3. `stackmob-proxy.js` - a static StackMob JavaScript file - included in your HTML file
 
-**You also need to use StackMob's Hosting service** because it can support the AJAX calls properly (special logic on StackMob web servers).  Only `proxy.html` needs to be on the hosting service.  All your other HTML files can live on your servers.
+<b>You also need to use <a href="https://marketplace.stackmob.com/module/html5" target="_blank">StackMob's Hosting service</a></b> because it can support the AJAX calls properly (special logic on StackMob web servers).  Only `proxy.html` needs to be on the hosting service.  All your other HTML files can live on your servers.
 
 
 ## Installation Instructions
 
-1.  Install the StackMob HTML Hosting service (only used for `proxy.html`, not your web files)
+1.  Install the <a href="https://marketplace.stackmob.com/module/html5" target="_blank">StackMob's Hosting service</a> (only used for `proxy.html`, not your web files)
 2.  Initialize the StackMob JS SDK in `proxy.html`
 
         StackMob.init({
@@ -37,7 +41,7 @@ The approach involves three files:
 
         var whiteListedDomain = 'http://www.mysite.com';
 
-4.  Deploy `proxy.html` to the hosting service - it's now on the web
+4.  Deploy `proxy.html` to <a href="https://marketplace.stackmob.com/module/html5" target="_blank">StackMob's Hosting service</a> (<a href="https://developer.stackmob.com/module/html5" target="_blank">how-to here</a>)
 5.  Include `stackmob-proxy.js` in **your** HTML pages immediately after the included StackMob JS SDK.  It's an extension.
 
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
