@@ -3,11 +3,9 @@ Making StackMob cross domain calls without CORS
 
 ## Overview
 
-Cross Origin Resource Sharing (CORS) is a way to enable cross domain calls, however not all browsers support it.  This is an alternative using HTML5's `postMessage` feature.
+StackMob's JavaScript SDK uses AJAX to communicate with StackMob's API server: `https://api.stackmob.com`.  Normally cross domain AJAX calls are blocked by browsers' same-domain origin policies, blocking calls to `api.stackmob.com` from `mysite.com`.
 
-## Background
-
-StackMob's JavaScript SDK uses AJAX to communicate with StackMob's API server: `https://api.stackmob.com`.  Normally cross domain AJAX calls are blocked by browsers' same-domain origin policies, blocking calls to `api.stackmob.com` from `mysite.com`.  StackMob supports CORS, but not all browsers do.  This is a workaround.
+StackMob supports CORS, but not all browsers do.  This is a workaround using HTML5's `postMessage`.
 
 ## How it works
 
