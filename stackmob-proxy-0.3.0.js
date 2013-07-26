@@ -10,9 +10,7 @@ _.extend(StackMob, {
 
   e.g. my file lives at http://dev.proxyexperiment.tai.stackmobapp.com/proxy-0.3.0.html
   */
-  HOSTED_DOMAIN: 'dev.proxyexperiment.tai.stackmobapp.com',
-
-  getBaseURL: function() { return this.HOSTED_DOMAIN + '/'; },
+  getBaseURL: function() { return this.hostedDomain + '/'; },
 
   initStart : function(options) {
     if(options['proxy']) {
@@ -33,7 +31,7 @@ _.extend(StackMob, {
       var dis = this;
 
       window.addEventListener('message', function(event) {
-        if(event.origin == ("http://" + dis.HOSTED_DOMAIN)) {
+        if(event.origin == ("http://" + dis.hostedDomain)) {
 
           var payload = JSON.parse(event.data);
 
@@ -60,10 +58,10 @@ _.extend(StackMob, {
   callLog : {},
 
   'ajax' : function(model, params, method) {
-    var success = params['success'];
-    var error = params['error'];
+    var originalSuccess = params['success'];
+    var originalError = params['error'];
     
-    var defaultSuccess = function(response, status, xhr) {
+    var wrappedSuccess = function(response, status, xhr) {
       var result;
 
       if(params["stackmob_count"] === true) {
@@ -86,6 +84,7 @@ _.extend(StackMob, {
     };
     
     params['success'] = defaultSuccess;
+
 
 
     params['error'] = function(jqXHR, textStatus, errorThrown) {
@@ -117,7 +116,7 @@ _.extend(StackMob, {
     };
 
     if(StackMob['proxyframe'])
-      StackMob['proxyframe'].contentWindow.postMessage(JSON.stringify(payload), ('http://' + this.HOSTED_DOMAIN));
+      StackMob['proxyframe'].contentWindow.postMessage(JSON.stringify(payload), ('http://' + this.hostedDomain));
     else
       throwError('No proxy frame found.');
   }
