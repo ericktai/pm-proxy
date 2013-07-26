@@ -1,5 +1,5 @@
 /**
- * Start of Cross-Domain plugin
+ * Currently based on StackMob JS SDK 0.9.2
  *
  *
  */
