@@ -68,13 +68,17 @@ $(document).ready(function() { //wait for the iframe tag to load
     
     //MAKE SDK CALLS HERE
     
+        //This looks like an ordinary JS SDK call, but behind the scenes it's using postMessage
+        //to tell the iframe's JS SDK to make the call on its behalf.
         var users = new StackMob.Users();
         var q = new StackMob.Collection.Query();
         users.query(q, {
-          success : function(x) {
+          //when the iframe's JS SDK gets a response, it'll pass it back to your JS SDK...
+          //which in turn processes the response and calls success/error as expected
+          success : function(model, response, options) {
             console.debug(x.toJSON());
           },
-          error : function(fail, message) {
+          error : function(model, response, options) {
             console.debug(message);
           }
         });    
