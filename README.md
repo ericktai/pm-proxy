@@ -48,7 +48,7 @@ You will also need a <a href="http://www.github.com" target="_blank">GitHub</a> 
         <script type="text/javascript" src="http://static.stackmob.com/js/stackmob-js-0.9.1-bundled-min.js"></script>
         <script type="text/javascript" src="stackmob-proxy.js"></script>
 
-6.  Initialize your pages' StackMob JS SDK
+6.  Initialize your pages' StackMob JS SDK (`client.html` in this case)
 
         StackMob.init({
           publicKey : [your public key],
