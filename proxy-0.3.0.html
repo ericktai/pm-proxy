@@ -56,19 +56,10 @@
           if(event.origin == whiteListedDomain) {
 
             var allowedDomain = event.origin;
-            var payload = JSON.parse(event.data);
             var call_id = payload['call_id'];
             var params = payload['params']
 
             params['success'] = function(data, status, xhr) {
-            	console.debug(params['stackmob_count']);
-            	console.debug(xhr);
-
-				//Yanked from StackMob.js Core
-				if (params["stackmob_count"] === true && xhr) {
-					data = xhr;
-
-				}
               
               var payload = {
                 result : 'success',
