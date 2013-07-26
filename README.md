@@ -25,7 +25,7 @@ Your page will use a modified version of the StackMob JS SDK that uses `postMess
 
 1.  Install the StackMob HTML Hosting service (only used for `proxy.html`, not your web files)
 2.  Initialize the StackMob JS SDK in `proxy.html`
-        ```js
+        ```
         StackMob.init({
           publicKey : [your public key],
           useRelativePathForAjax : true, //note this line!
@@ -33,18 +33,18 @@ Your page will use a modified version of the StackMob JS SDK that uses `postMess
         });
         ```
 3.  Modify the `whiteListedDomain` in `proxy.html`.  If your domain is `http://www.mysite.com` then:
-        ```js
+        ```
         var whiteListedDomain = 'http://www.mysite.com';
         ```
 4.  Deploy `proxy.html` to the hosting service - it's now on the web
 5.  Include `stackmob-proxy.js` in **your** HTML pages immediately after the included StackMob JS SDK.  It's an extension.
-        ```js
+        ```
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
         <script type="text/javascript" src="http://static.stackmob.com/js/stackmob-js-0.9.1-bundled-min.js"></script>
         <script type="text/javascript" src="stackmob-proxy.js"></script>
         ```
 6.  Initialize your pages' StackMob JS SDK
-        ```js
+        ```
         StackMob.init({
           publicKey : [your public key],
           proxyURL : 'http://[your StackMob hosted domain]/proxy.html', //note this line!
