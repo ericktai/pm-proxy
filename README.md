@@ -56,7 +56,7 @@ You will also need a <a href="http://www.github.com" target="_blank">GitHub</a> 
           apiVersion : 0
         });
 
-7.  Start making JS SDK calls as you normally would!
+7.  run `http://127.0.0.1:4567/client.html` as if you were developing from there and make regular JS SDK calls
 
 **You must make calls after the iframe loads**:
 
