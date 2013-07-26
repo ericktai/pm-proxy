@@ -72,3 +72,9 @@ $(document).ready(function() { //wait for the iframe tag to load
   });
 });
 ```
+
+## Running the Example
+
+Run your file on `http://127.0.0.1:4567` since that's the currently whitelisted domain.  OR, roll your own proxy.html and change the whitelisted domain.
+
+Don't forget to initialize your `proxyURL` and your `publicKey`.  The given URL and key settings are my personal account.
