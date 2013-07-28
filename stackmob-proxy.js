@@ -121,12 +121,8 @@ _.extend(StackMob, {
     if(model.getPrimaryKeyField)
       call_id += '_' + model.get(model.getPrimaryKeyField());
 
-    <<<<<<< Updated upstream
     //save a reference to this outbound call so that when the iframe returns with the response, we
     //can look it up and call the proper success/error methods, models, and options
-    =======
-
-    >>>>>>> Stashed changes
     StackMob['callLog'][call_id] = {};
     StackMob['callLog'][call_id]['success'] = processProxySuccess;
     StackMob['callLog'][call_id]['error'] = processProxyError;
